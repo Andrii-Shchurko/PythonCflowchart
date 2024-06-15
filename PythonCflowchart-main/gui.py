@@ -84,9 +84,8 @@ class FlowchartApp:
         self.output_frame.grid_rowconfigure(1, weight=1)
         self.output_frame.grid_columnconfigure(0, weight=1)
         self.editor_frame.grid_rowconfigure(1, weight=1)
-        self.editor_frame.grid_columnconfigure(0, weight=1)
 
-  # Створення меню
+    # Створення меню
     def create_menu(self):
         menu_bar = tk.Menu(self.root)
         self.root.config(menu=menu_bar)
