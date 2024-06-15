@@ -223,7 +223,7 @@ def generate_flowchart(c_code):
         while_node_id = add_special_node(label, shape='diamond', cluster=cluster, x=12)
         loop_start_y = y_position
         if parent_id:
-            cluster.edge(f"{parent_id}:{tailport}", f"{while_node_id}:{headport}", label=edge_label, fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
+            cluster.edge(f"{parent_id}:{tailport}", f"{while_node_id}:{headport}", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
         
         body_id, body_tailport = traverse_ast(node.stmt, while_node_id, cluster, tailport='s', headport='n', depth=depth + 1)
 
@@ -264,7 +264,7 @@ def generate_flowchart(c_code):
         cluster.edge(f"{bend_point_below_id}:w", f"{bend_point_left_id}:e", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
         cluster.edge(f"{bend_point_left_id}:n", f"{bend_point_above_id}:s", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
         cluster.edge(f"{bend_point_above_id}:e", f"{while_node_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["loopback_arrows"])
-        cluster.edge(f"{while_node_id}:e", f"{bend_point_right_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
+        cluster.edge(f"{while_node_id}:e", f"{bend_point_right_id}:w", label="Ні", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
 
         if depth == 0:
             cluster.edge(f"{bend_point_right_id}:s", f"{additional_node_id}:n", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
@@ -308,7 +308,7 @@ def generate_flowchart(c_code):
                 content_y_position = case_y_position - 1.5
                 last_stmt_id = case_node_id
                 for stmt in case.stmts:
-                    stmt_id, stmt_tailport = traverse_ast(stmt, last_stmt_id, cluster, edge_label="true", depth=depth + 1, x=case_x_positions[i], y_pos=content_y_position)
+                    stmt_id, stmt_tailport = traverse_ast(stmt, last_stmt_id, cluster, edge_label="Так", depth=depth + 1, x=case_x_positions[i], y_pos=content_y_position)
                     content_y_position -= 1.5
                     last_stmt_id = stmt_id
                 max_y_positions.append(content_y_position)
@@ -324,13 +324,13 @@ def generate_flowchart(c_code):
                     cluster.edge(f"{switch_point_id}:e", f"{case_point_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
                     cluster.edge(f"{case_point_id}:s", f"{default_node_id}:n", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
                 else:
-                    cluster.edge(f"{previous_case_id}:e", f"{default_node_id}:w", label="false", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
+                    cluster.edge(f"{previous_case_id}:e", f"{default_node_id}:w", label="Ні", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
                 previous_case_id = default_node_id
 
                 content_y_position = case_y_position - 1.5
                 last_stmt_id = default_node_id
                 for stmt in case.stmts:
-                    stmt_id, stmt_tailport = traverse_ast(stmt, last_stmt_id, cluster, edge_label="true", depth=depth + 1, x=case_x_positions[i], y_pos=content_y_position)
+                    stmt_id, stmt_tailport = traverse_ast(stmt, last_stmt_id, cluster, edge_label="Так", depth=depth + 1, x=case_x_positions[i], y_pos=content_y_position)
                     content_y_position -= 1.5
                     last_stmt_id = stmt_id
                 max_y_positions.append(content_y_position)
@@ -366,7 +366,7 @@ def generate_flowchart(c_code):
         current_y = y_position
 
         y_position = current_y
-        true_branch_id, true_tailport = traverse_ast(node.iftrue, if_node_id, cluster, edge_label="True", tailport='s', headport='n', depth=depth + 1, x=true_branch_x)
+        true_branch_id, true_tailport = traverse_ast(node.iftrue, if_node_id, cluster, edge_label="Так", tailport='s', headport='n', depth=depth + 1, x=true_branch_x)
 
         x_position_inner = x + 1.3
         x_position_outer = x_position_inner
@@ -381,8 +381,8 @@ def generate_flowchart(c_code):
 
         last_true_point_id = add_node("", shape='point', width=0.1, height=0.1, cluster=cluster, x=x, pos=f"{x},{current_y - 0.75}!")
 
-        cluster.edge(f"{if_node_id}:e", f"{true_bend_point1_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
-        cluster.edge(f"{true_bend_point1_id}:s", f"{true_bend_point2_id}:n", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
+        cluster.edge(f"{if_node_id}:e",f"{true_bend_point1_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
+        cluster.edge(f"{true_bend_point1_id}:s", f"{true_bend_point2_id}:n", label="Ні", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
         cluster.edge(f"{true_bend_point2_id}:e", f"{last_true_point_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
 
         return true_branch_id, 's'
@@ -407,10 +407,10 @@ def generate_flowchart(c_code):
         cluster.edge(f"{if_node_id}:e", f"{false_bend_point_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
 
         y_position = current_y
-        true_branch_id, true_tailport = traverse_ast(node.iftrue, true_bend_point_id, cluster, edge_label="True", tailport='s', headport='n', depth=depth + 1, x=true_branch_x)
+        true_branch_id, true_tailport = traverse_ast(node.iftrue, true_bend_point_id, cluster, edge_label="Так", tailport='s', headport='n', depth=depth + 1, x=true_branch_x)
 
         y_position = current_y
-        false_branch_id, false_tailport = traverse_ast(node.iffalse, false_bend_point_id, cluster, edge_label="False", tailport='s', headport='n', depth=depth + 1, x=false_branch_x)
+        false_branch_id, false_tailport = traverse_ast(node.iffalse, false_bend_point_id, cluster, edge_label="Ні", tailport='s', headport='n', depth=depth + 1, x=false_branch_x)
 
         concentrator_y = min(y_position, current_y) + 0.75
 
@@ -529,11 +529,11 @@ def generate_flowchart(c_code):
             with dot.subgraph(name=f'cluster_{ext.decl.name}') as cluster:
                 cluster.attr(label=f"< <B>Блок-схема для функції {func_decl}</B> >", labelloc="t", fontsize=str(global_settings["cluster_fontsize"]), margin=str(global_settings["cluster_margin"]))
                 cluster.attr(overlap='true')
-                start_id = add_node('Start', shape='Mrecord', height=global_settings["start_end_height"], cluster=cluster, pos=f"12,{y_position}!")
+                start_id = add_node('Початок', shape='Mrecord', height=global_settings["start_end_height"], cluster=cluster, pos=f"12,{y_position}!")
                 y_position -= 1.5
                 max_depth_y = y_position
                 parent_id, tailport = traverse_ast(ext.body, start_id, cluster, depth=0, x=12)
-                end_id = add_node('End', shape='Mrecord', height=global_settings["start_end_height"], cluster=cluster, pos=f"12,{max_depth_y}!")
+                end_id = add_node('Кінець', shape='Mrecord', height=global_settings["start_end_height"], cluster=cluster, pos=f"12,{max_depth_y}!")
                 y_position = max_depth_y
                 cluster.edge(f"{parent_id}:{tailport}", f"{end_id}:n", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
             cluster_ids.append(f'cluster_{ext.decl.name}')

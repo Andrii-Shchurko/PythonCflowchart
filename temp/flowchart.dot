@@ -3,7 +3,7 @@ digraph {
 	subgraph cluster_main {
 		fontsize=20 label=< <B>Блок-схема для функції int&nbsp;main()</B> > labelloc=t margin=45
 		overlap=true
-		node0 [label=Start fixedsize=true fontsize=16 height=0.5 penwidth=2 pin=true pos="12,0!" shape=Mrecord width=1.5]
+		node0 [label="Початок" fixedsize=true fontsize=16 height=0.5 penwidth=2 pin=true pos="12,0!" shape=Mrecord width=1.5]
 		node1 [label="int i, int sum =\n0, int number" fixedsize=true fontsize=16 height=1.0 penwidth=2 pin=true pos="12,-1.5!" shape=rectangle width=1.5]
 		node0:s -> node1:n [arrowhead=normal fontsize=16 penwidth=2]
 		node2 [label="Вивести:\n\"Введіть 10\nчисел: \"" fixedsize=true fontsize=16 height=1.0 penwidth=2 pin=true pos="12,-3.0!" shape=parallelogram width=2.0]
@@ -31,9 +31,7 @@ digraph {
 		node12:w -> node11:e [arrowhead=none fontsize=16 penwidth=2]
 		node13 [label="Вивести: \"Сума\nвведених чисел:\n\", sum" fixedsize=true fontsize=16 height=1.0 penwidth=2 pin=true pos="12,-12.0!" shape=parallelogram width=2.0]
 		node11:s -> node13:n [arrowhead=normal fontsize=16 penwidth=2]
-		node14 [label="return 0" fixedsize=true fontsize=16 height=1.0 penwidth=2 pin=true pos="12,-13.5!" shape=rectangle width=1.5]
+		node14 [label="Кінець" fixedsize=true fontsize=16 height=0.5 penwidth=2 pin=true pos="12,-13.5!" shape=Mrecord width=1.5]
 		node13:s -> node14:n [arrowhead=normal fontsize=16 penwidth=2]
-		node15 [label=End fixedsize=true fontsize=16 height=0.5 penwidth=2 pin=true pos="12,-15.0!" shape=Mrecord width=1.5]
-		node14:s -> node15:n [arrowhead=normal fontsize=16 penwidth=2]
 	}
 }
