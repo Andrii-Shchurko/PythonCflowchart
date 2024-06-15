@@ -574,15 +574,9 @@ def main():
         "online_mode": False
     }
     update_global_settings(new_settings)
-
+    #нижче можна ввести код С, для побудови блок-схеми без інтерфейсу
     example_c_code = """
-    int main() {
-        int a = 10;
-        if (a > 5) {
-            a = 5;
-        }
-        return 0;
-    }
+    
     """
 
     dot_output, svg_path = generate_flowchart(example_c_code)
