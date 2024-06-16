@@ -302,12 +302,14 @@ def generate_flowchart(c_code):
                     cluster.edge(f"{switch_point_id}:e", f"{case_point_id}:w", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead='none')
                     cluster.edge(f"{case_point_id}:s", f"{case_node_id}:n", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
                 else:
-                    cluster.edge(f"{previous_case_id}:e", f"{case_node_id}:w", label="false", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
+                    cluster.edge(f"{previous_case_id}:e", f"{case_node_id}:w", label="Ні", fontsize=str(global_settings["edge_fontsize"]), penwidth=str(global_settings["edge_penwidth"]), arrowhead=global_settings["edge_arrows"])
                 previous_case_id = case_node_id
 
                 content_y_position = case_y_position - 1.5
                 last_stmt_id = case_node_id
                 for stmt in case.stmts:
+                    if isinstance(stmt, c_ast.Break):
+                        continue  # Ignore break statements
                     stmt_id, stmt_tailport = traverse_ast(stmt, last_stmt_id, cluster, edge_label="Так", depth=depth + 1, x=case_x_positions[i], y_pos=content_y_position)
                     content_y_position -= 1.5
                     last_stmt_id = stmt_id
@@ -330,6 +332,8 @@ def generate_flowchart(c_code):
                 content_y_position = case_y_position - 1.5
                 last_stmt_id = default_node_id
                 for stmt in case.stmts:
+                    if isinstance(stmt, c_ast.Break):
+                        continue  # Ignore break statements
                     stmt_id, stmt_tailport = traverse_ast(stmt, last_stmt_id, cluster, edge_label="Так", depth=depth + 1, x=case_x_positions[i], y_pos=content_y_position)
                     content_y_position -= 1.5
                     last_stmt_id = stmt_id
@@ -450,6 +454,8 @@ def generate_flowchart(c_code):
                 if isinstance(stmt, c_ast.Decl):
                     decl_nodes.append(stmt)
                 else:
+                    if isinstance(stmt, c_ast.Break):
+                        continue  # Ignore break statements
                     if decl_nodes:
                         combined_label = ", ".join(get_code_line(decl) for decl in decl_nodes)
                         node_id = add_node(combined_label, cluster=cluster, x=x)
@@ -519,6 +525,7 @@ def generate_flowchart(c_code):
 
         return parent_id, tailport
 
+
     cluster_ids = []
 
     # Генерація блок-схем для кожної функції
@@ -540,7 +547,7 @@ def generate_flowchart(c_code):
 
     # З'єднання кластерів невидимими з'єднаннями, для запобігання розкидання по полотну
     for i in range(len(cluster_ids) - 1):
-        dot.edge(cluster_ids[i], cluster_ids[i + 1], style='invis', len='0.1')
+        dot.edge(cluster_ids[i], cluster_ids[i + 1], style='invis', len='1')
 
     dot_output = dot.source
 

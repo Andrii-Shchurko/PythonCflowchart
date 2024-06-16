@@ -41,7 +41,7 @@ class FlowchartApp:
         self.create_spinbox("Товщина ліній", "edge_penwidth", 9, 0, 10, increment=0.1)
         self.create_spinbox("Товщина контурів блоків", "node_penwidth", 10, 0, 10, increment=0.1)
         self.create_spinbox("Відступ", "cluster_margin", 11, 0, 100)
-        self.create_spinbox("Кількість символів в рядку", "width_factor", 13, 1, 20)
+        self.create_spinbox("Кількість символів в рядку", "width_factor", 13, 1, 64)
         self.create_checkbox("Онлайн-режим", "online_mode", 16)
         self.create_checkbox("Стрілки на лініях", "edge_arrows", 17, "normal", "none",initial=True)
         self.create_checkbox("Стрілки циклу", "loopback_arrows", 18, "normal", "none",initial=True)
