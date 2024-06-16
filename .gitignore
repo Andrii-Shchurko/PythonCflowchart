@@ -1,0 +1,13 @@
+PythonCflowchart-main/flowchart_generator.py
+PythonCflowchart-main/gui.py
+PythonCflowchart-main/README.md
+PythonCflowchart-main/requirements.txt
+PythonCflowchart-main/Testing.C
+PythonCflowchart-main/Встановити бібліотеки.bat
+PythonCflowchart-main/Запустити Генератор Блок-схем.bat
+PythonCflowchart-main/__pycache__/flowchart_generator.cpython-310.pyc
+PythonCflowchart-main/temp/ast.txt
+PythonCflowchart-main/temp/flowchart
+PythonCflowchart-main/temp/flowchart.dot
+PythonCflowchart-main/temp/flowchart.png
+PythonCflowchart-main/temp/flowchart.svg
